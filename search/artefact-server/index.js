@@ -43,18 +43,18 @@ const archivalItems = archivalFilenames.reduce(compileItems, []);
 
 
 const graphics = {
-	'de': graphicItems.filter(item => item.langCode === 'de' && item.images),
-	'en': graphicItems.filter(item => item.langCode === 'en' && item.images),
+	'de': graphicItems.filter(item => item.metadata.langCode === 'de' && item.images),
+	'en': graphicItems.filter(item => item.metadata.langCode === 'en' && item.images),
 };
 
 const paintings = {
-	'de': paintingItems.filter(item => item.langCode === 'de' && item.images),
-	'en': paintingItems.filter(item => item.langCode === 'en' && item.images),
+	'de': paintingItems.filter(item => item.metadata.langCode === 'de' && item.images),
+	'en': paintingItems.filter(item => item.metadata.langCode === 'en' && item.images),
 };
 
 const archivals = {
-	'de': archivalItems.filter(item => item.langCode === 'de'),
-	'en': archivalItems.filter(item => item.langCode === 'en'),
+	'de': archivalItems.filter(item => item.metadata.langCode === 'de'),
+	'en': archivalItems.filter(item => item.metadata.langCode === 'en'),
 };
 
 
@@ -78,9 +78,9 @@ app.get('/random', (req, res) => {
 
 
 	const foundItems = {
-		graphics: randomizedGraphicItems.slice(0, graphicsCnt).map(mapping.mapGraphicToArtifact),
-		paintings: randomizedPaintingItems.slice(0, paintingsCnt).map(mapping.mapPaintingToArtifact),
-		archivals: randomizedArchivalItems.slice(0, archivalsCnt).map(mapping.mapArchivalToArtifact),
+		graphics: randomizedGraphicItems.slice(0, graphicsCnt).map(mapping.extractMetadata),
+		paintings: randomizedPaintingItems.slice(0, paintingsCnt).map(mapping.extractMetadata),
+		archivals: randomizedArchivalItems.slice(0, archivalsCnt).map(mapping.extractMetadata),
 	};
 
 	res.statusCode = 200;
